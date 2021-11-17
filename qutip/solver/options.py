@@ -177,6 +177,9 @@ class SolverResultsOptions:
         "all" will normalize both ket and dm.
         On "ket", only 'ket' output are normalized.
         Leave empty for no normalization.
+
+    keep_runs_results: bool
+        Keep all trajectories results or save only the average.
     """
     options = {
         # store final state?
@@ -186,6 +189,8 @@ class SolverResultsOptions:
         # Normalize output of solvers
         # (turned off for batch unitary propagator mode)
         "normalize_output": "ket",
+
+        "keep_runs_results": False,
     }
 
 
@@ -222,20 +227,20 @@ class McOptions:
         Max. number of steps used to find wavefunction norm to within norm_tol
         in mcsolve.
 
-    keep_runs_results: bool
-        Keep all trajectories results or save only the average.
-
     map : str  {'parallel', 'serial', 'loky'}
         How to run the trajectories.
         'parallel' use python's multiprocessing.
         'loky' use the pyhon module of the same name (not installed with qutip).
 
-    map_options: dict
-        keys:
-            'num_cpus': number of cpus to use.
-            'timeout': maximum time for all trajectories. (sec)
-            'job_timeout': maximum time per trajectory. (sec)
+    num_cpus : int
+        Number of cpus to use when running in parallel.
+
+    timeout : float {1e8}
+        Maximum time for all trajectories in seconds.
         Only finished trajectories will be returned when timeout is reached.
+
+    job_timeout: float {1e8}
+        Maximum time per trajectory in seconds.
 
     mc_corr_eps : float {1e-10}
         Arbitrarily small value for eliminating any divide-by-zero errors in
@@ -252,13 +257,13 @@ class McOptions:
 
         "map": "parallel_map",
 
-        "keep_runs_results": False,
-
         "mc_corr_eps": 1e-10,
 
-        "map_options": {
-            'num_cpus': multiprocessing.cpu_count(),
-            'timeout':1e8,
-            'job_timeout':1e8
-        },
+        "bitgenerator": "",
+
+        'num_cpus': multiprocessing.cpu_count(),
+
+        'timeout': 1e8,
+
+        'job_timeout': 1e8,
     }

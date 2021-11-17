@@ -6,7 +6,6 @@ from ..core import stack_columns, unstack_columns
 from .result import Result
 from .integrator import Integrator
 from ..ui.progressbar import progess_bars
-from ..core.data import to
 from time import time
 
 
